@@ -1,4 +1,9 @@
 #include "monty.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int is_number(const char *str);
 
 /**
  * push - Pushes an element to the stack.
@@ -7,8 +12,8 @@
  */
 void push(stack_t **stack, unsigned int line_number)
 {
-    /* Get the argument for the push opcode */
     char *arg = strtok(NULL, " \t\n");
+    stack_t *new_node;
 
     if (arg == NULL || !is_number(arg))
     {
@@ -16,8 +21,7 @@ void push(stack_t **stack, unsigned int line_number)
         exit(EXIT_FAILURE);
     }
 
-    /* Create a new node and push it to the stack */
-    stack_t *new_node = malloc(sizeof(stack_t));
+    new_node = malloc(sizeof(stack_t));
     if (new_node == NULL)
     {
         fprintf(stderr, "Error: malloc failed\n");
@@ -45,7 +49,7 @@ void push(stack_t **stack, unsigned int line_number)
  * @stack: Pointer to the top of the stack
  * @line_number: Line number in the file where the opcode is encountered
  */
-void pall(stack_t **stack, unsigned int line_number)
+void pall(stack_t **stack, unsigned int line_number __attribute__((unused)))
 {
     stack_t *temp = *stack;
 
@@ -56,12 +60,11 @@ void pall(stack_t **stack, unsigned int line_number)
     }
 }
 
-/* Helper function to check if a string is a valid number */
 int is_number(const char *str)
 {
-	int i = 0;
+int i = 0;
 
-	if (str == NULL || *str == '\0')
+    if (str == NULL || *str == '\0')
         return (0);
 
     if (str[0] == '-' || str[0] == '+')
