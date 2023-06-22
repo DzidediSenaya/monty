@@ -8,19 +8,19 @@
 */
 void rotr(stack_t **stack)
 {
-    stack_t *last = *stack;
+stack_t *last = *stack;
 
-    if (last == NULL || last->next == NULL)
-        return;
+if (last == NULL || last->next == NULL)
+return;
 
-    while (last->next != NULL)
-        last = last->next;
+while (last->next != NULL)
+last = last->next;
 
-    last->prev->next = NULL;
-    last->prev = NULL;
-    last->next = *stack;
-    (*stack)->prev = last;
-    *stack = last;
+last->prev->next = NULL;
+last->prev = NULL;
+last->next = *stack;
+(*stack)->prev = last;
+*stack = last;
 }
 
 
@@ -34,20 +34,20 @@ void rotr(stack_t **stack)
  */
 void rotl(stack_t **stack)
 {
-    stack_t *first = *stack;
-    stack_t *last = *stack;
+stack_t *first = *stack;
+stack_t *last = *stack;
 
-    if (first == NULL || first->next == NULL)
-        return;
+if (first == NULL || first->next == NULL)
+return;
 
-    while (last->next != NULL)
-        last = last->next;
+while (last->next != NULL)
+last = last->next;
 
-    *stack = first->next;
-    (*stack)->prev = NULL;
+*stack = first->next;
+(*stack)->prev = NULL;
 
-    first->next = NULL;
-    first->prev = last;
-    last->next = first;
+first->next = NULL;
+first->prev = last;
+last->next = first;
 }
 
