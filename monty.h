@@ -59,6 +59,11 @@ void rotl(stack_t **stack);
 void rotr(stack_t **stack);
 void stack_op(stack_t **stack, unsigned int line_number);
 void queue(stack_t **stack, unsigned int line_number);
+void process_file(FILE *file);
+void process_line(char *line, unsigned int line_number);
+void execute_opcode(char *opcode, stack_t **stack, unsigned int line_number);
+void handle_unknown_opcode(char *opcode, unsigned int line_number);
+
 
 #endif /* MONTY_H */
 
