@@ -15,7 +15,7 @@ if (*str == '-' || *str == '+')
 str++;
 
 if (*str == '\0')
-return false;
+return (false);
 
 while (*str != '\0')
 {

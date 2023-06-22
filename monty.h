@@ -46,7 +46,20 @@ int is_number(const char *str);
 int get_line(char **lineptr, size_t *n, FILE *stream);
 bool is_integer(const char *str);
 void add_node(stack_t **stack, int value);
-
+void pop(stack_t **stack, unsigned int line_number);
+void swap(stack_t **stack, unsigned int line_number);
+void add(stack_t **stack, unsigned int line_number);
+void nop(stack_t **stack, unsigned int line_number);
+void sub(stack_t **stack, unsigned int line_number);
+void _div(stack_t **stack, unsigned int line_number);
+void mul(stack_t **stack, unsigned int line_number);
+void mod(stack_t **stack, unsigned int line_number);
+void pchar(stack_t **stack, unsigned int line_number);
+void pstr(stack_t **stack);
+void rotl(stack_t **stack);
+void rotr(stack_t **stack);
+void stack_op(stack_t **stack, unsigned int line_number);
+void queue(stack_t **stack, unsigned int line_number);
 
 #endif /* MONTY_H */
 
