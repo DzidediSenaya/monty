@@ -1,5 +1,6 @@
 #ifndef MONTY_H
 #define MONTY_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
@@ -35,11 +36,13 @@ typedef struct instruction_s
 } instruction_t;
 
 /* Function Prototypes */
-
 int main(int argc, char *argv[]);
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
+void free_stack(stack_t *stack);
+int is_number(const char *str);
+int get_line(char **lineptr, size_t *n, FILE *stream);
 
 #endif /* MONTY_H */
 

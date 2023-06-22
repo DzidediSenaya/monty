@@ -4,8 +4,7 @@
 #include <stddef.h>
 #include <string.h>
 
-int getline(char **lineptr, size_t *n, FILE *stream);
-void free_stack(stack_t *stack);
+int get_line(char **lineptr, size_t *n, FILE *stream);
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 
@@ -19,14 +18,13 @@ void pall(stack_t **stack, unsigned int line_number);
  */
 int main(int argc, char *argv[])
 {
-FILE *file = fopen(argv[1], "r");
-stack_t *stack = NULL;
+    FILE *file;
+    stack_t *stack = NULL;
     char *line = NULL;
     size_t line_len = 0;
     unsigned int line_number = 0;
-int read;
-char *opcode = strtok(line, " \t\n");
-
+    int read;
+    char *opcode;
 
     if (argc != 2)
     {
@@ -34,27 +32,23 @@ char *opcode = strtok(line, " \t\n");
         return EXIT_FAILURE;
     }
 
-    /* Open the Monty bytecode file*/
+    file = fopen(argv[1], "r");
     if (file == NULL)
     {
         fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
         return EXIT_FAILURE;
     }
 
-
-    /*Read and process each line of the bytecode file*/
-while ((read = getline(&line, &line_len, file)) != EOF)
-{
+    while ((read = get_line(&line, &line_len, file)) != -1)
+    {
         line_number++;
-
         if (line[read - 1] == '\n')
             line[read - 1] = '\0';
 
-        /* Tokenize the line to extract the opcode*/
+        opcode = strtok(line, " \t\n");
         if (opcode == NULL || opcode[0] == '#')
             continue;
 
-        /* Process the opcode*/
         if (strcmp(opcode, "push") == 0)
         {
             push(&stack, line_number);
@@ -73,7 +67,6 @@ while ((read = getline(&line, &line_len, file)) != EOF)
         }
     }
 
-    /*Free allocated memory and close the file*/
     free(line);
     fclose(file);
     free_stack(stack);
