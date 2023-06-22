@@ -4,7 +4,6 @@
 * rotr - this opcode rotates the stack to the bottom.
 * The last element of the stack becomes the top element of the stack.
 * @stack: Double pointer to the stack
-* @line_number: Line number of the opcode in the Monty file
 */
 void rotr(stack_t **stack)
 {
@@ -30,7 +29,6 @@ last->next = *stack;
  * second top element of the stack becomes the first one.
  *
  * @stack: Double pointer to the stack
- * @line_number: Line number of the opcode in the Monty file
  */
 void rotl(stack_t **stack)
 {
