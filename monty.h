@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <stdbool.h>
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -43,6 +44,9 @@ void pint(stack_t **stack, unsigned int line_number);
 void free_stack(stack_t *stack);
 int is_number(const char *str);
 int get_line(char **lineptr, size_t *n, FILE *stream);
+bool is_integer(const char *str);
+void add_node(stack_t **stack, int value);
+
 
 #endif /* MONTY_H */
 
