@@ -11,10 +11,9 @@
  * Return: The number of characters read, or -1 if an error
  * occurred or end-of-file was reached
  */
-
 int get_line(char **lineptr, size_t *n, FILE *stream)
 {
-    size_t bufsize = 0;
+    size_t bufsize = 64;  // Initial buffer size
     int c;
     size_t i = 0;
 char *new_lineptr;
@@ -22,8 +21,9 @@ char *new_lineptr;
     if (lineptr == NULL || n == NULL || stream == NULL)
         return -1;
 
-    *lineptr = NULL;
-    *n = 0;
+    *lineptr = malloc(bufsize);
+    if (*lineptr == NULL)
+        return -1;
 
     while ((c = fgetc(stream)) != EOF)
     {
@@ -37,7 +37,6 @@ char *new_lineptr;
                 return -1;
             }
             *lineptr = new_lineptr;
-            *n = bufsize;
         }
 
         (*lineptr)[i++] = c;
@@ -47,9 +46,14 @@ char *new_lineptr;
     }
 
     if (i == 0 && c == EOF)
+    {
+        free(*lineptr);
         return -1;
+    }
 
     (*lineptr)[i] = '\0';
+    *n = i + 1;
+
     return (int)i;
 }
 
