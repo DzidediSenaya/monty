@@ -14,17 +14,42 @@
 
 int get_line(char **lineptr, size_t *n, FILE *stream)
 {
-int line_length = get_line(lineptr, n, stream);
+    size_t bufsize = 0;
+    int c;
+    size_t i = 0;
+char *new_lineptr;
 
-if (line_length == -1)
-{
-free(*lineptr);
-*lineptr = NULL;
-}
-else if ((*lineptr)[line_length - 1] == '\n')
-{
-(*lineptr)[line_length - 1] = '\0'; /* Remove the trailing newline character */
-}
-return (line_length);
+    if (lineptr == NULL || n == NULL || stream == NULL)
+        return -1;
+
+    *lineptr = NULL;
+    *n = 0;
+
+    while ((c = fgetc(stream)) != EOF)
+    {
+        if (i >= bufsize - 1)
+        {
+            bufsize += 64;
+            new_lineptr = realloc(*lineptr, bufsize);
+            if (new_lineptr == NULL)
+            {
+                free(*lineptr);
+                return -1;
+            }
+            *lineptr = new_lineptr;
+            *n = bufsize;
+        }
+
+        (*lineptr)[i++] = c;
+
+        if (c == '\n')
+            break;
+    }
+
+    if (i == 0 && c == EOF)
+        return -1;
+
+    (*lineptr)[i] = '\0';
+    return (int)i;
 }
 
