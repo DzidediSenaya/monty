@@ -5,7 +5,7 @@
 #include <string.h>
 
 void process_file(FILE *file);
-void process_line(char *line, unsigned int line_number);
+void process_line(char *line,unsigned int line_number);
 void execute_opcode(char *opcode, stack_t **stack, unsigned int line_number);
 void handle_unknown_opcode(char *opcode, unsigned int line_number);
 
@@ -55,13 +55,9 @@ int read;
 while ((read = get_line(&line, &line_len, file)) != -1)
 {
 line_number++;
-if (line[read - 1] == '\n')
-line[read - 1] = '\0';
 
 process_line(line, line_number);
 }
-
-free(line);
 }
 
 /**
@@ -69,7 +65,7 @@ free(line);
  * @line: The line to process
  * @line_number: The line number being executed
  */
-void process_line(char *line, unsigned int line_number)
+void process_line(char *line,unsigned int line_number)
 {
 stack_t *stack = NULL;
 char *opcode = strtok(line, " \t\n");
@@ -133,6 +129,6 @@ handle_unknown_opcode(opcode, line_number);
 void handle_unknown_opcode(char *opcode, unsigned int line_number)
 {
 fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
-exit(EXIT_FAILURE);
+return;
 }
 
