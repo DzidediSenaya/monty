@@ -5,7 +5,7 @@
 #include <string.h>
 
 void process_file(FILE *file);
-void process_line(char *line,unsigned int line_number);
+void process_line(char *line, unsigned int line_number);
 void execute_opcode(char *opcode, stack_t **stack, unsigned int line_number);
 void handle_unknown_opcode(char *opcode, unsigned int line_number);
 
@@ -65,7 +65,7 @@ process_line(line, line_number);
  * @line: The line to process
  * @line_number: The line number being executed
  */
-void process_line(char *line,unsigned int line_number)
+void process_line(char *line, unsigned int line_number)
 {
 stack_t *stack = NULL;
 char *opcode = strtok(line, " \t\n");
