@@ -5,7 +5,7 @@
 #include <string.h>
 
 void process_file(FILE *file);
-void process_line(char *line, unsigned int line_number);
+void process_line(char *line,unsigned int line_number);
 void execute_opcode(char *opcode, stack_t **stack, unsigned int line_number);
 void handle_unknown_opcode(char *opcode, unsigned int line_number);
 
@@ -19,26 +19,26 @@ void handle_unknown_opcode(char *opcode, unsigned int line_number);
  */
 int main(int argc, char *argv[])
 {
-    FILE *file;
+FILE *file;
 
-    if (argc != 2)
-    {
-        fprintf(stderr, "USAGE: monty file\n");
-        return (EXIT_FAILURE);
-    }
+if (argc != 2)
+{
+fprintf(stderr, "USAGE: monty file\n");
+return (EXIT_FAILURE);
+}
 
-    file = fopen(argv[1], "r");
-    if (!file)
-    {
-        fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-        return (EXIT_FAILURE);
-    }
+file = fopen(argv[1], "r");
+if (!file)
+{
+fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+return (EXIT_FAILURE);
+}
 
-    process_file(file);
+process_file(file);
 
-    fclose(file);
+fclose(file);
 
-    return (EXIT_SUCCESS);
+return (EXIT_SUCCESS);
 }
 
 /**
@@ -47,24 +47,25 @@ int main(int argc, char *argv[])
  */
 void process_file(FILE *file)
 {
-    char *line = NULL;
-    size_t line_len = 0;
-    int read;
+char *line = NULL;
+size_t line_len = 0;
 unsigned int line_number = 0;
+int read;
 
-    while ((read = get_line(&line, &line_len, file)) != -1)
-    {
-        process_line(line, line_number);
-    }
+while ((read = get_line(&line, &line_len, file)) != -1)
+{
+line_number++;
+
+process_line(line, line_number);
 }
-
+}
 
 /**
  * process_line - Process a single line of the input file
  * @line: The line to process
  * @line_number: The line number being executed
  */
-void process_line(char *line, unsigned int line_number)
+void process_line(char *line,unsigned int line_number)
 {
 stack_t *stack = NULL;
 char *opcode = strtok(line, " \t\n");
