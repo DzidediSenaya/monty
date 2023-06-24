@@ -19,26 +19,26 @@ void handle_unknown_opcode(char *opcode, unsigned int line_number);
  */
 int main(int argc, char *argv[])
 {
-FILE *file;
+    FILE *file;
 
-if (argc != 2)
-{
-fprintf(stderr, "USAGE: monty file\n");
-return (EXIT_FAILURE);
-}
+    if (argc != 2)
+    {
+        fprintf(stderr, "USAGE: monty file\n");
+        return (EXIT_FAILURE);
+    }
 
-file = fopen(argv[1], "r");
-if (!file)
-{
-fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-return (EXIT_FAILURE);
-}
+    file = fopen(argv[1], "r");
+    if (!file)
+    {
+        fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+        return (EXIT_FAILURE);
+    }
 
-process_file(file);
+    process_file(file);
 
-fclose(file);
+    fclose(file);
 
-return (EXIT_SUCCESS);
+    return (EXIT_SUCCESS);
 }
 
 /**
@@ -47,18 +47,19 @@ return (EXIT_SUCCESS);
  */
 void process_file(FILE *file)
 {
-char *line = NULL;
-size_t line_len = 0;
+    char *line = NULL;
+    size_t line_len = 0;
+    int read;
 unsigned int line_number = 0;
-int read;
 
-while ((read = get_line(&line, &line_len, file)) != -1)
-{
-line_number++;
+    while ((read = get_line(&line, &line_len, file)) != -1)
+    {
+        process_line(line, line_number);
+    }
 
-process_line(line, line_number);
+    free(line);
 }
-}
+
 
 /**
  * process_line - Process a single line of the input file
