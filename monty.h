@@ -62,7 +62,7 @@ void queue(stack_t **stack, unsigned int line_number);
 void process_file(FILE *file);
 void execute_opcode(char *opcode, stack_t **stack, unsigned int line_number);
 void handle_unknown_opcode(char *opcode, unsigned int line_number);
-void process_line(char *line,unsigned int line_number);
+void process_line(char *line, unsigned int line_number);
 
 #endif /* MONTY_H */
 
