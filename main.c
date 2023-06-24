@@ -56,8 +56,6 @@ unsigned int line_number = 0;
     {
         process_line(line, line_number);
     }
-
-    free(line);
 }
 
 
