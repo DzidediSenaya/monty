@@ -13,7 +13,7 @@
  */
 int get_line(char **lineptr, size_t *n, FILE *stream)
 {
-size_t bufsize = 64, size_t i = 0;
+size_t bufsize = 64, i = 0;
 int c;
 char *new_lineptr;
 
@@ -49,7 +49,6 @@ return (-1);
 }
 (*lineptr)[i] = '\0';
 *n = i + 1;
-
 return (i);
 }
 
