@@ -13,42 +13,45 @@
  */
 int get_line(char **lineptr, size_t *n, FILE *stream)
 {
-size_t bufsize = 64, i = 0;
-int c;
-char *new_lineptr;
+  size_t bufsize = 64, i = 0;
+  int c;
+  char *new_lineptr;
 
-if (lineptr == NULL || n == NULL || stream == NULL)
-return (-1);
+  if (lineptr == NULL || n == NULL || stream == NULL)
+    return (-1);
 
-*lineptr = malloc(bufsize);
-if (*lineptr == NULL)
-return (-1);
+  *lineptr = malloc(bufsize);
+  if (*lineptr == NULL)
+    return (-1);
 
-while ((c = fgetc(stream)) != EOF)
-{
-if (i >= bufsize - 1)
-{
-bufsize += 64;
-new_lineptr = realloc(*lineptr, bufsize);
-if (new_lineptr == NULL)
-{
-free(*lineptr);
-return (-1);
-}
-*lineptr = new_lineptr;
-}
-(*lineptr)[i++] = c;
+  while ((c = fgetc(stream)) != EOF)
+  {
+    if (i >= bufsize - 1)
+    {
+      bufsize += 64;
+      new_lineptr = realloc(*lineptr, bufsize);
+      if (new_lineptr == NULL)
+      {
+        free(*lineptr);
+        return (-1);
+      }
+      *lineptr = new_lineptr;
+    }
 
-if (c == '\n')
-break;
-}
-if (i == 0 && c == EOF)
-{
-free(*lineptr);
-return (-1);
-}
-(*lineptr)[i] = '\0';
-*n = i + 1;
-return (i);
+    if (c == '\n')
+      break;
+
+    (*lineptr)[i++] = c;
+  }
+
+  if (i == 0 && c == EOF)
+  {
+    free(*lineptr);
+    return (-1);
+  }
+
+  (*lineptr)[i] = '\0';
+  *n = i + 1;
+  return (i);
 }
 
