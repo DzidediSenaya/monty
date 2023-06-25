@@ -7,7 +7,7 @@
 void process_file(FILE *file);
 void process_line(char *line, unsigned int line_number);
 void execute_opcode(char *opcode, stack_t **stack, unsigned int line_number);
-void handle_unknown_opcode(char *opcode, unsigned int line_number);
+void handle_unknown_opcode(char *opcode, unsigned int line_number, stack_t *stack);
 
 /**
  * main - Entry point for the Monty bytecode interpreter
@@ -59,6 +59,7 @@ process_line(line, line_number);
 }
 }
 
+
 /**
  * process_line - Process a single line of the input file
  * @line: The line to process
@@ -69,8 +70,10 @@ void process_line(char *line, unsigned int line_number)
   stack_t *stack = NULL;
   char *opcode = strtok(line, " \t\n");
 
-  if (!opcode || opcode[0] == '#')
+  if (!opcode || opcode[0] == '#') {
+    free_stack(stack);
     return;
+  }
 
   execute_opcode(opcode, &stack, line_number);
   free_stack(stack);
@@ -107,7 +110,7 @@ void execute_opcode(char *opcode, stack_t **stack, unsigned int line_number)
   else if (strcmp(opcode, "pchar") == 0)
     pchar(stack, line_number);
   else if (strcmp(opcode, "pstr") == 0)
-    pstr(stack);
+    pstr(*stack);
   else if (strcmp(opcode, "rotl") == 0)
     rotl(stack);
   else if (strcmp(opcode, "rotr") == 0)
@@ -117,20 +120,19 @@ void execute_opcode(char *opcode, stack_t **stack, unsigned int line_number)
   else if (strcmp(opcode, "queue") == 0)
     queue(stack, line_number);
   else
-  {
-    fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
-    exit(EXIT_FAILURE);
-  }
+    handle_unknown_opcode(opcode, line_number, *stack);
 }
 
 /**
  * handle_unknown_opcode - Handles an unknown opcode error
  * @opcode: The unknown opcode
  * @line_number: The line number where the error occurred
+ * @stack: Pointer to the stack
  */
-void handle_unknown_opcode(char *opcode, unsigned int line_number)
+void handle_unknown_opcode(char *opcode, unsigned int line_number, stack_t *stack)
 {
   fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
+  free_stack(stack);
   exit(EXIT_FAILURE);
 }
 

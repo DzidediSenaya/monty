@@ -32,18 +32,18 @@ putchar('\n');
  * pstr - opcode prints the string starting at the top of the stack,
  * followed by a new line.
  *
- * @stack: Double pointer to the stack
+ * @stack: Pointer to the stack
  */
-void pstr(stack_t **stack)
+void pstr(stack_t *stack)
 {
-stack_t *top = *stack;
+    stack_t *top = stack;
 
-while (top != NULL && top->n != 0 && (top->n > 0 && top->n <= 127))
-{
-putchar(top->n);
-top = top->next;
-}
+    while (top != NULL && top->n != 0 && (top->n > 0 && top->n <= 127))
+    {
+        putchar(top->n);
+        top = top->next;
+    }
 
-putchar('\n');
+    putchar('\n');
 }
 
