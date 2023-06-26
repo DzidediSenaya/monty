@@ -7,7 +7,10 @@
 void process_file(FILE *file);
 void process_line(char *line, unsigned int line_number);
 void execute_opcode(char *opcode, stack_t **stack, unsigned int line_number);
-void handle_unknown_opcode(char *opcode, unsigned int line_number, stack_t *stack);
+void handle_unknown_opcode(
+char *opcode,
+unsigned int line_number,
+stack_t *stack);
 
 /**
  * main - Entry point for the Monty bytecode interpreter
@@ -19,26 +22,26 @@ void handle_unknown_opcode(char *opcode, unsigned int line_number, stack_t *stac
  */
 int main(int argc, char *argv[])
 {
-  FILE *file;
+FILE *file;
 
-  if (argc != 2)
-  {
-    fprintf(stderr, "USAGE: monty file\n");
-    return (EXIT_FAILURE);
-  }
+if (argc != 2)
+{
+fprintf(stderr, "USAGE: monty file\n");
+return (EXIT_FAILURE);
+}
 
-  file = fopen(argv[1], "r");
-  if (!file)
-  {
-    fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-    return (EXIT_FAILURE);
-  }
+file = fopen(argv[1], "r");
+if (!file)
+{
+fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+return (EXIT_FAILURE);
+}
 
-  process_file(file);
+process_file(file);
 
-  fclose(file);
+fclose(file);
 
-  return (EXIT_SUCCESS);
+return (EXIT_SUCCESS);
 }
 /**
  * process_file - Process the lines of the input file
@@ -67,16 +70,17 @@ process_line(line, line_number);
  */
 void process_line(char *line, unsigned int line_number)
 {
-  stack_t *stack = NULL;
-  char *opcode = strtok(line, " \t\n");
+stack_t *stack = NULL;
+char *opcode = strtok(line, " \t\n");
 
-  if (!opcode || opcode[0] == '#') {
-    free_stack(stack);
-    return;
-  }
+if (!opcode || opcode[0] == '#')
+{
+free_stack(stack);
+return;
+}
 
-  execute_opcode(opcode, &stack, line_number);
-  free_stack(stack);
+execute_opcode(opcode, &stack, line_number);
+free_stack(stack);
 }
 
 /**
@@ -85,42 +89,45 @@ void process_line(char *line, unsigned int line_number)
  * @stack: Double pointer to the head of the stack
  * @line_number: The line number being executed
  */
-void execute_opcode(char *opcode, stack_t **stack, unsigned int line_number)
+void execute_opcode(
+char *opcode,
+stack_t **stack,
+unsigned int line_number)
 {
-  if (strcmp(opcode, "push") == 0)
-    push(stack, line_number);
-  else if (strcmp(opcode, "pall") == 0)
-    pall(stack, line_number);
-  else if (strcmp(opcode, "pint") == 0)
-    pint(stack, line_number);
-  else if (strcmp(opcode, "pop") == 0)
-    pop(stack, line_number);
-  else if (strcmp(opcode, "swap") == 0)
-    swap(stack, line_number);
-  else if (strcmp(opcode, "add") == 0)
-    add(stack, line_number);
-  else if (strcmp(opcode, "sub") == 0)
-    sub(stack, line_number);
-  else if (strcmp(opcode, "div") == 0)
-    _div(stack, line_number);
-  else if (strcmp(opcode, "mul") == 0)
-    mul(stack, line_number);
-  else if (strcmp(opcode, "mod") == 0)
-    mod(stack, line_number);
-  else if (strcmp(opcode, "pchar") == 0)
-    pchar(stack, line_number);
-  else if (strcmp(opcode, "pstr") == 0)
-    pstr(*stack);
-  else if (strcmp(opcode, "rotl") == 0)
-    rotl(stack);
-  else if (strcmp(opcode, "rotr") == 0)
-    rotr(stack);
-  else if (strcmp(opcode, "stack") == 0)
-    stack_op(stack, line_number);
-  else if (strcmp(opcode, "queue") == 0)
-    queue(stack, line_number);
-  else
-    handle_unknown_opcode(opcode, line_number, *stack);
+if (strcmp(opcode, "push") == 0)
+push(stack, line_number);
+else if (strcmp(opcode, "pall") == 0)
+pall(stack, line_number);
+else if (strcmp(opcode, "pint") == 0)
+pint(stack, line_number);
+else if (strcmp(opcode, "pop") == 0)
+pop(stack, line_number);
+else if (strcmp(opcode, "swap") == 0)
+swap(stack, line_number);
+else if (strcmp(opcode, "add") == 0)
+add(stack, line_number);
+else if (strcmp(opcode, "sub") == 0)
+sub(stack, line_number);
+else if (strcmp(opcode, "div") == 0)
+_div(stack, line_number);
+else if (strcmp(opcode, "mul") == 0)
+mul(stack, line_number);
+else if (strcmp(opcode, "mod") == 0)
+mod(stack, line_number);
+else if (strcmp(opcode, "pchar") == 0)
+pchar(stack, line_number);
+else if (strcmp(opcode, "pstr") == 0)
+pstr(*stack);
+else if (strcmp(opcode, "rotl") == 0)
+rotl(stack);
+else if (strcmp(opcode, "rotr") == 0)
+rotr(stack);
+else if (strcmp(opcode, "stack") == 0)
+stack_op(stack, line_number);
+else if (strcmp(opcode, "queue") == 0)
+queue(stack, line_number);
+else
+handle_unknown_opcode(opcode, line_number, *stack);
 }
 
 /**
@@ -129,10 +136,13 @@ void execute_opcode(char *opcode, stack_t **stack, unsigned int line_number)
  * @line_number: The line number where the error occurred
  * @stack: Pointer to the stack
  */
-void handle_unknown_opcode(char *opcode, unsigned int line_number, stack_t *stack)
+void handle_unknown_opcode(
+char *opcode,
+unsigned int line_number,
+stack_t *stack)
 {
-  fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
-  free_stack(stack);
-  exit(EXIT_FAILURE);
+fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
+free_stack(stack);
+exit(EXIT_FAILURE);
 }
 

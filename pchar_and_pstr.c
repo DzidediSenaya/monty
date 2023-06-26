@@ -36,14 +36,14 @@ putchar('\n');
  */
 void pstr(stack_t *stack)
 {
-    stack_t *top = stack;
+stack_t *top = stack;
 
-    while (top != NULL && top->n != 0 && (top->n > 0 && top->n <= 127))
-    {
-        putchar(top->n);
-        top = top->next;
-    }
+while (top != NULL && top->n != 0 && (top->n > 0 && top->n <= 127))
+{
+putchar(top->n);
+top = top->next;
+}
 
-    putchar('\n');
+putchar('\n');
 }
 
